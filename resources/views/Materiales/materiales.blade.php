@@ -89,19 +89,19 @@
 <br>
 <div class="row">
 <div class="col-md-6">
-<input type="number" name="costo" id="costo" class="form-control" style="border-color: orange" placeholder="Costo" onchange="operacion();">
+<input type="number" name="costo" id="costo" class="form-control" style="border-color: orange" min="0" step="0.01" placeholder="Costo" onchange="operacion();">
 </div>
 <div class="col-md-6">
-<input type="number" name="unidades" id="unidades" class="form-control" style="border-color: orange" placeholder="Unidades" onchange="operacion();">
+<input type="number" name="unidades" id="unidades" class="form-control" style="border-color: orange" min="0" step="0.01" placeholder="Unidades" onchange="operacion();">
 </div>
 </div>
 <br>
 <div class="row">
     <div class="col-md-6">
-    <input type="number" name="uso_unidad" id="uso_unidad" class="form-control" style="border-color: orange" placeholder="Uso por unidad" onchange="operacion();">
+    <input type="number" name="uso_unidad" id="uso_unidad" class="form-control" style="border-color: orange" min="0" step="0.01" placeholder="Uso por unidad" onchange="operacion();">
     </div>
     <div class="col-md-6">
-    <input type="number" name="costo_uso" id="costo_uso" class="form-control" style="border-color: orange" placeholder="Costo por uso" readonly>
+    <input type="number" name="costo_uso" id="costo_uso" class="form-control" style="border-color: orange" min="0" step="0.01" placeholder="Costo por uso" readonly>
     </div>
     </div>
 
