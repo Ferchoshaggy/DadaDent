@@ -12,8 +12,7 @@
 /*# sourceMappingURL=adminlte.min.css.map */
 
 .colo{
-    background-image:url('../img/fondoM.png');
-    background-repeat:no-repeat;
+    background-color:orange;
 }
 .preloader {
     background:orange !important;

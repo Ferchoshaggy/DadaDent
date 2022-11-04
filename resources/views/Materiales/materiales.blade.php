@@ -26,6 +26,24 @@
 </div>
 @endif
 
+@if(Session::get('message')== "El Material se actualizo Corectamente")
+<div class="alert alert-{{ Session::get('color') }}" role="alert" style="font-family: Arial, Helvetica, sans-serif;">
+    {{ Session::get('message') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+
+@if(Session::get('message')== "El Material se Elimino Corectamente")
+<div class="alert alert-{{ Session::get('color') }}" role="alert" style="font-family: Arial, Helvetica, sans-serif;">
+    {{ Session::get('message') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+
 @endif
 
   <div class="row">
@@ -121,11 +139,11 @@
     <button type="button" class="close" style="margin-right: -17px; margin-top: -20px;" onclick="cerrar_menu();">
        <i class="fas fa-times fa-xs"></i>
     </button>
-  <button class="btn btn-warning form-control" style="margin-bottom: 10px; font-weight: bold;" data-toggle="modal" data-target="#eliminar_mate">
+  <button class="btn btn-warning form-control" style="margin-bottom: 10px; font-weight: bold;" data-toggle="modal" data-target="#eliminar_mate" onclick="date_mat();">
     Eliminar
   </button>
   <br>
-  <button type="button" class="btn btn-info form-control" style="margin-bottom: 10px; font-weight: bold;" data-toggle="modal" data-target="#editar_mate">
+  <button type="button" class="btn btn-info form-control" style="margin-bottom: 10px; font-weight: bold;" data-toggle="modal" data-target="#editar_mate" onclick="update_mat()">
     Editar
   </button>
 
@@ -138,13 +156,13 @@
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Eliminar Material</h5>
         </div>
-        <form action="" method="POST">
+        <form action="{{Route('mate_delete')}}" method="POST">
             @csrf
             @method('DELETE')
             <div class="modal-body">
-              <label style="font-family: cursive; font-size: 25px; display:flex; justify-content: center;align-items: center; height: 100%;">¿Quieres Eliminar el Material?</label><br><br>
+              <label style="font-family: cursive; font-size: 30px; display:flex; justify-content: center;align-items: center; height: 100%;">¿Quieres Eliminar el Material?</label><br>
                 <div style="text-align: center;">
-                    <label style="font-family: cursive; font-size: 25px;" id="labeleliminar"></label>
+                    <label style="font-family: cursive; font-size: 30px;" id="labeleliminar"></label>
                      </div>
             </div>
             <div class="modal-footer">
@@ -159,15 +177,38 @@
 
 <!-- modal de editar material-->
 <div class="modal fade" id="editar_mate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Editar Material</h5>
         </div>
-        <form action="" method="POST">
+        <form action="{{route('mate_update')}}" method="POST">
             @csrf
             <div class="modal-body">
 
+                <div class="row">
+                    <div class="col-md-12">
+                <input type="text" name="nombre" id="nombre" class="form-control" style="border-color: orange" placeholder="Nombre">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                <div class="col-md-6">
+                <input type="number" name="costo" id="costoE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo" onchange="operacion2();">
+                </div>
+                <div class="col-md-6">
+                <input type="number" name="unidades" id="unidadesE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Unidades" onchange="operacion2();">
+                </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                    <input type="number" name="uso_unidad" id="uso_unidadE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Uso por unidad" onchange="operacion2();">
+                    </div>
+                    <div class="col-md-6">
+                    <input type="number" name="costo_uso" id="costo_usoE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo por uso" readonly>
+                    </div>
+                    </div>
 
             </div>
             <div class="modal-footer">
@@ -258,6 +299,20 @@ document.getElementById("costo_uso").value=costouso.toFixed(2);
 } catch (error) {
 }}
 
+function operacion2(){
+try {
+    var costo=parseFloat(document.getElementById("costoE").value),
+        uni=parseFloat(document.getElementById("unidadesE").value),
+        uso=parseFloat(document.getElementById("uso_unidadE").value);
+if(costo && uni && uso){
+    var costouso=(costo/uni/uso);
+document.getElementById("costo_usoE").value=costouso.toFixed(2);
+}else{
+    document.getElementById("costo_usoE").value=0;
+}
+} catch (error) {
+}}
+
 //jquery para desvanecer el mensage
 $(".alert").fadeTo(3000, 500).slideUp(500, function(){
     $(".alert").slideUp(500);
@@ -267,7 +322,7 @@ $(".alert").fadeTo(3000, 500).slideUp(500, function(){
 var id_material=null;
     function pasar_id($id_tr) {
 
-        id_user=$id_tr;
+        id_material=$id_tr;
         var coordenadas_y=event.clientY; //odtenemos el valor de la posicion del boton
         var coordenadas_x=event.clientX; //odtenemos el valor de la posicion del boton
         menu_opciones.style.top=coordenadas_y-50+"px";
@@ -284,6 +339,48 @@ var id_material=null;
         menu_opciones.classList.remove("visible_on");
         menu_opciones.classList.add("visible_off");
     }
+
+  function date_mat(){
+    $.ajax({
+  url: "{{url('/search_material')}}"+'/'+id_material,
+  dataType: "json",
+  //context: document.body
+}).done(function(datosMat) {
+
+  if(datosMat==null){
+    document.getElementById("labeleliminar").innerHTML=null;
+    document.getElementById("id_mate").value=null;
+  }else{
+    document.getElementById("labeleliminar").innerHTML=datosMat.Nombre;
+    document.getElementById("id_mate").value=datosMat.id;
+  }
+});
+  }
+
+ function update_mat(){
+    $.ajax({
+  url: "{{url('/search_material')}}"+'/'+id_material,
+  dataType: "json",
+  //context: document.body
+}).done(function(datosMat) {
+
+  if(datosMat==null){
+    document.getElementById("nombre").value=null;
+    document.getElementById("costoE").value=null;
+    document.getElementById("unidadesE").value=null;
+    document.getElementById("uso_unidadE").value=null;
+    document.getElementById("costo_usoE").value=null;
+    document.getElementById("id_mate2").value=null;
+  }else{
+    document.getElementById("nombre").value=datosMat.Nombre;
+    document.getElementById("costoE").value=datosMat.Costo;
+    document.getElementById("unidadesE").value=datosMat.Unidades;
+    document.getElementById("uso_unidadE").value=datosMat.Uso_de_unidad;
+    document.getElementById("costo_usoE").value=datosMat.Costo_por_uso;
+    document.getElementById("id_mate2").value=datosMat.id;
+  }
+});
+ }
 
 </script>
 

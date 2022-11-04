@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PresupuestoController;
 use App\Http\Controllers\ProcedimientosController;
 use App\Http\Controllers\MaterialesController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +34,6 @@ Route::get('/procedimiento',[ProcedimientosController::class,'vista_proce'])->na
 //Materiales
 Route::get('/materiales',[MaterialesController::class,'vista_mate'])->name('materiales');
 Route::post('/save_material',[MaterialesController::class,'save_mate'])->name('save_mate');
+Route::get("/search_material/{id}",[SearchController::class,'materialSearch'])->name('materialSearch');
+Route::delete('/delete_material',[MaterialesController::class,'mate_delete'])->name('mate_delete');
+Route::post('/update_material',[MaterialesController::class,'mate_update'])->name('mate_update');

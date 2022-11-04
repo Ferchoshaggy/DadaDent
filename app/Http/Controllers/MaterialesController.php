@@ -33,4 +33,28 @@ return redirect()->back()->with(['message' => 'El Material se Agrego Corectament
     //throw $th;
 }
     }
+
+    public function mate_delete(Request $request){
+        try{
+            DB::table('materiales')->where("id",$request['id_mate'])->delete();
+            return redirect()->back()->with(['message' => 'El Material se Elimino Corectamente', 'color' => 'info']);
+        }catch (\Throwable $th){
+
+        }
+    }
+
+    public function mate_update(Request $request){
+        try{
+DB::table('materiales')->where("id",$request['id_mate2'])->update([
+    "Nombre"=>$request['nombre'],
+    "Costo"=>$request['costo'],
+    "Unidades"=>$request['unidades'],
+    "Uso_de_unidad"=>$request['uso_unidad'],
+    "Costo_por_uso"=>$request['costo_uso']
+]);
+return redirect()->back()->with(['message' => 'El Material se actualizo Corectamente', 'color' => 'info']);
+        }catch (\Throwable $th){
+
+        }
+    }
 }
