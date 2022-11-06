@@ -9,11 +9,11 @@
 
 <div class="card-body">
 <div style="text-align: center">
-<img src="{{asset('img/LOGO.png')}}" width="35%" height="35%">
+<img src="{{asset('img/LOGO.png')}}" width="35%" height="auto">
 </div>
 
 <div style="text-align: center; margin-top: 20px" >
-    <img src="{{asset('img/dada.png')}}" width="23%" height="23%">
+    <img src="{{asset('img/dada.png')}}" width="23%" height="auto">
     </div>
 
     <div class="row" style="margin-top:20px">

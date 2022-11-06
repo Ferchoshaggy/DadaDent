@@ -53,8 +53,8 @@
   </div>
 
   <div class="row">
-  <div class="col-12">
-    <button class="btn butt" style="width: 15%;float: right;"  data-toggle="modal" data-target="#agregarMat">Agregar</button>
+  <div class="col-12" style="text-align: right;">
+    <button class="btn butt" data-toggle="modal" data-target="#agregarMat">Agregar</button>
   </div>
 </div>
 <br>
@@ -100,25 +100,23 @@
         <div class="modal-body">
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" style="margin-bottom: 20px;">
 <input type="text" name="nombre" class="form-control" style="border-color: orange" placeholder="Nombre">
     </div>
 </div>
-<br>
 <div class="row">
-<div class="col-md-6">
-<input type="number" name="costo" id="costo" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo" onchange="operacion();">
+<div class="col-md-6" style="margin-bottom: 20px;">
+<input type="number" name="costo" id="costo" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo" onchange="operacion();" onkeyup="operacion();">
 </div>
-<div class="col-md-6">
-<input type="number" name="unidades" id="unidades" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Unidades" onchange="operacion();">
+<div class="col-md-6" style="margin-bottom: 20px;">
+<input type="number" name="unidades" id="unidades" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Unidades" onchange="operacion();" onkeyup="operacion();">
 </div>
 </div>
-<br>
 <div class="row">
-    <div class="col-md-6">
-    <input type="number" name="uso_unidad" id="uso_unidad" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Uso por unidad" onchange="operacion();">
+    <div class="col-md-6" style="margin-bottom: 20px;">
+    <input type="number" name="uso_unidad" id="uso_unidad" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Uso por unidad" onchange="operacion();" onkeyup="operacion();">
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" style="margin-bottom: 20px;">
     <input type="number" name="costo_uso" id="costo_uso" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo por uso" readonly>
     </div>
     </div>
@@ -187,25 +185,23 @@
             <div class="modal-body">
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12" style="margin-bottom: 20px;">
                 <input type="text" name="nombre" id="nombre" class="form-control" style="border-color: orange" placeholder="Nombre">
                     </div>
                 </div>
-                <br>
                 <div class="row">
-                <div class="col-md-6">
-                <input type="number" name="costo" id="costoE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo" onchange="operacion2();">
+                <div class="col-md-6" style="margin-bottom: 20px;">
+                <input type="number" name="costo" id="costoE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo" onchange="operacion2();" onkeyup="operacion2();">
                 </div>
-                <div class="col-md-6">
-                <input type="number" name="unidades" id="unidadesE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Unidades" onchange="operacion2();">
+                <div class="col-md-6" style="margin-bottom: 20px;">
+                <input type="number" name="unidades" id="unidadesE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Unidades" onchange="operacion2();" onkeyup="operacion2();">
                 </div>
                 </div>
-                <br>
                 <div class="row">
-                    <div class="col-md-6">
-                    <input type="number" name="uso_unidad" id="uso_unidadE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Uso por unidad" onchange="operacion2();">
+                    <div class="col-md-6" style="margin-bottom: 20px;">
+                    <input type="number" name="uso_unidad" id="uso_unidadE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Uso por unidad" onchange="operacion2();" onkeyup="operacion2();">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="margin-bottom: 20px;">
                     <input type="number" name="costo_uso" id="costo_usoE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo por uso" readonly>
                     </div>
                     </div>

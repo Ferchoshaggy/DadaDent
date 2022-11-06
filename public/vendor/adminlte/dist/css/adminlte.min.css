@@ -17,6 +17,15 @@
 .preloader {
     background:orange !important;
 }
+.img-circle{
+    margin-left: 6px !important;
+}
+
+
+[class*=sidebar-dark] .brand-link {
+    border-bottom: 1px solid transparent !important;
+}
+
 
 [class*=sidebar-dark-] .sidebar a{
     color:white;

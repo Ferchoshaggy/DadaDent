@@ -19,7 +19,7 @@ class CreateMaterialesTable extends Migration
             $table->integer('Costo');
             $table->integer('Unidades');
             $table->integer('Uso_de_unidad');
-            $table->integer('Costo_por_uso');
+            $table->float('Costo_por_uso');
             $table->timestamps();
         });
     }

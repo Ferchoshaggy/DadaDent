@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use DB;
 class ProcedimientosController extends Controller
 {
     public function __construct()
@@ -12,6 +12,9 @@ class ProcedimientosController extends Controller
     }
 
     public function vista_proce(){
-        return view('Procedimiento.procedimiento');
+
+        $materiales=DB::table("materiales")->select("*")->get();
+
+        return view('Procedimiento.procedimiento',compact("materiales"));
     }
 }
