@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-    style="background-image: url(./img/fondo.png); background-size: cover;
-    background-repeat:no-repeat;
-    background-position: center center; background-attachment: fixed; ">
+    style="background-image: url(./img/fondo.png); background-size: 50rem;">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">

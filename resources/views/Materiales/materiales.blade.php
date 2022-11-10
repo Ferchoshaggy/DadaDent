@@ -74,10 +74,10 @@
 @foreach ($materiales as $material)
 <tr class="marca" onclick="pasar_id({{$material->id}});">
     <td style="text-align: center;">{{$material->Nombre}}</td>
-    <td style="text-align: center;">{{$material->Costo}}</td>
+    <td style="text-align: center;">${{$material->Costo}}</td>
     <td style="text-align: center;">{{$material->Unidades}}</td>
     <td style="text-align: center;">{{$material->Uso_de_unidad}}</td>
-    <td style="text-align: center;">{{$material->Costo_por_uso}}</td>
+    <td style="text-align: center;">${{$material->Costo_por_uso}}</td>
 </tr>
 @endforeach
         </tbody>
@@ -92,8 +92,11 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Agregar un Nuevo Material</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+            </button>
         </div>
         <form action="{{Route('save_mate')}}" method="POST">
             @csrf
@@ -101,23 +104,35 @@
 
 <div class="row">
     <div class="col-md-12" style="margin-bottom: 20px;">
-<input type="text" name="nombre" class="form-control" style="border-color: orange" placeholder="Nombre">
+        <label>Nombre</label>
+        <input type="text" class="form-control" placeholder="Nombre" name="nombre"  style="border-color: #D6802E;" >
+
     </div>
 </div>
 <div class="row">
 <div class="col-md-6" style="margin-bottom: 20px;">
-<input type="number" name="costo" id="costo" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo" onchange="operacion();" onkeyup="operacion();">
+    <label>Costo</label>
+    <div class="input-group mb-3">
+      <span class="input-group-text" style="border-color: #D6802E;">$</span>
+      <input type="number" class="form-control" placeholder="Costo" name="costo" id="costo"  style="border-color: #D6802E;" pattern="^[0-9]" min="0" step="0.01" onchange="operacion();" onkeyup="operacion();">
+    </div>
 </div>
 <div class="col-md-6" style="margin-bottom: 20px;">
-<input type="number" name="unidades" id="unidades" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Unidades" onchange="operacion();" onkeyup="operacion();">
+    <label>Unidades</label>
+<input type="number" name="unidades" id="unidades" class="form-control" style="border-color: #D6802E" pattern="^[0-9]" min="0" placeholder="Unidades" onchange="operacion();" onkeyup="operacion();">
 </div>
 </div>
 <div class="row">
     <div class="col-md-6" style="margin-bottom: 20px;">
-    <input type="number" name="uso_unidad" id="uso_unidad" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Uso por unidad" onchange="operacion();" onkeyup="operacion();">
+        <label>Uso por unidad</label>
+    <input type="number" name="uso_unidad" id="uso_unidad" class="form-control" style="border-color: #D6802E" pattern="^[0-9]" min="0" step="0.01" placeholder="Uso por unidad" onchange="operacion();" onkeyup="operacion();">
     </div>
     <div class="col-md-6" style="margin-bottom: 20px;">
-    <input type="number" name="costo_uso" id="costo_uso" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo por uso" readonly>
+        <label>Costo por uso</label>
+        <div class="input-group mb-3">
+          <span class="input-group-text" style="border-color: #D6802E;">$</span>
+          <input type="number" class="form-control" placeholder="Costo"  name="costo_uso" id="costo_uso" readonly  style="border-color: #D6802E;">
+        </div>
     </div>
     </div>
 
@@ -158,9 +173,9 @@
             @csrf
             @method('DELETE')
             <div class="modal-body">
-              <label style="font-family: cursive; font-size: 30px; display:flex; justify-content: center;align-items: center; height: 100%;">¿Quieres Eliminar el Material?</label><br>
+              <label style="font-family: cursive; font-size: 20px; display:flex; justify-content: center;align-items: center; height: 100%;">¿Quieres Eliminar el Material?</label><br>
                 <div style="text-align: center;">
-                    <label style="font-family: cursive; font-size: 30px;" id="labeleliminar"></label>
+                    <label style="font-family: cursive; font-size: 25px;" id="labeleliminar"></label>
                      </div>
             </div>
             <div class="modal-footer">
@@ -179,6 +194,12 @@
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Editar Material</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+            </button>
         </div>
         <form action="{{route('mate_update')}}" method="POST">
             @csrf
@@ -186,23 +207,35 @@
 
                 <div class="row">
                     <div class="col-md-12" style="margin-bottom: 20px;">
-                <input type="text" name="nombre" id="nombre" class="form-control" style="border-color: orange" placeholder="Nombre">
+                        <label>Nombre</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control" style="border-color: #D6802E" placeholder="Nombre">
                     </div>
                 </div>
                 <div class="row">
                 <div class="col-md-6" style="margin-bottom: 20px;">
-                <input type="number" name="costo" id="costoE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo" onchange="operacion2();" onkeyup="operacion2();">
+                    <label>Costo</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text" style="border-color: #D6802E;">$</span>
+                      <input type="number" name="costo" id="costoE" class="form-control" style="border-color: #D6802E" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo" onchange="operacion2();" onkeyup="operacion2();">
+                    </div>
                 </div>
                 <div class="col-md-6" style="margin-bottom: 20px;">
-                <input type="number" name="unidades" id="unidadesE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Unidades" onchange="operacion2();" onkeyup="operacion2();">
+                    <label>Unidades</label>
+                    <input type="number" name="unidades" id="unidadesE" class="form-control" style="border-color: #D6802E" pattern="^[0-9]" min="0" placeholder="Unidades" onchange="operacion2();" onkeyup="operacion2();">
                 </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6" style="margin-bottom: 20px;">
-                    <input type="number" name="uso_unidad" id="uso_unidadE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Uso por unidad" onchange="operacion2();" onkeyup="operacion2();">
+                        <label>Uso por unidad</label>
+                        <input type="number" name="uso_unidad" id="uso_unidadE" class="form-control" style="border-color: #D6802E" pattern="^[0-9]" min="0" step="0.01" placeholder="Uso por unidad" onchange="operacion2();" onkeyup="operacion2();">
+
                     </div>
                     <div class="col-md-6" style="margin-bottom: 20px;">
-                    <input type="number" name="costo_uso" id="costo_usoE" class="form-control" style="border-color: orange" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo por uso" readonly>
+                        <label>Costo por uso</label>
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" style="border-color: #D6802E;">$</span>
+                          <input type="number" name="costo_uso" id="costo_usoE" class="form-control" style="border-color: #D6802E" pattern="^[0-9]" min="0" step="0.01" placeholder="Costo por uso" readonly>
+                        </div>
                     </div>
                     </div>
 
@@ -236,7 +269,7 @@ input[type=number] { -moz-appearance:textfield; }
 
         border-radius:10px;
         color:white;
-        background:rgba(255, 166, 0, 0.986);
+        background-color: #D6802E;
     }
     .marca{
         transition: 1s;

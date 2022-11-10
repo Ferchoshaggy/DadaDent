@@ -15,8 +15,8 @@ class CreateTempoInfersTable extends Migration
     {
         Schema::create('tempo_infers', function (Blueprint $table) {
             $table->id();
+            $table->integer("numero_asignado");
             $table->string('pz_dental');
-            $table->timestamps();
         });
     }
 

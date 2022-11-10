@@ -15,8 +15,8 @@ class CreateTempoSupersTable extends Migration
     {
         Schema::create('tempo_supers', function (Blueprint $table) {
             $table->id();
+            $table->integer("numero_asignado");
             $table->string('pz_dental');
-            $table->timestamps();
         });
     }
 
