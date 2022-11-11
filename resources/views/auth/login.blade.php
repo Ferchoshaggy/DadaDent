@@ -72,7 +72,7 @@
                             </a>
                         @endif
 -->
-<button class="btn btn-info" style="width: 100%; color:white">
+<button class="btn " style="width: 100%; color:white; background-color: #2FB4D6;">
     {{ __('INGRESAR') }}
 </button>
                     </div>

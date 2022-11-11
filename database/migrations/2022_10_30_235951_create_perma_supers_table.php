@@ -15,8 +15,8 @@ class CreatePermaSupersTable extends Migration
     {
         Schema::create('perma_supers', function (Blueprint $table) {
             $table->id();
+            $table->integer("numero_asignado");
             $table->string('pz_dental');
-            $table->timestamps();
         });
     }
 
