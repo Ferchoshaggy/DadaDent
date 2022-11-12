@@ -42,6 +42,8 @@ Route::post("/update_presupuesto",[PresupuestoController::class,'update_presupue
 Route::delete('/delete_presupuesto',[PresupuestoController::class,'delete_presupuesto'])->name('delete_presupuesto');
 Route::get('/pdf_interno/{id}',[PresupuestoController::class,'pdf_interno'])->name('pdf_interno');
 Route::get('/pdf_externo/{id}',[PresupuestoController::class,'pdf_externo'])->name('pdf_externo');
+Route::get("/all_procedimientos",[SearchController::class,'all_procedimientos'])->name('all_procedimientos');
+
 
 //procedimientos
 Route::get('/procedimiento',[ProcedimientosController::class,'vista_proce'])->name('procedimiento');
@@ -49,6 +51,7 @@ Route::post('/save_procedimiento',[ProcedimientosController::class,'save_procedi
 Route::get("/procedimiento_materialSearch/{id}",[SearchController::class,'procedimiento_materialSearch'])->name('procedimiento_materialSearch');
 Route::post('/update_procedimiento',[ProcedimientosController::class,'update_procedimiento'])->name('update_procedimiento');
 Route::delete('/delete_procedimiento',[ProcedimientosController::class,'delete_procedimiento'])->name('delete_procedimiento');
+Route::get("/all_materiales",[SearchController::class,'all_materiales'])->name('all_materiales');
 
 //Materiales
 Route::get('/materiales',[MaterialesController::class,'vista_mate'])->name('materiales');

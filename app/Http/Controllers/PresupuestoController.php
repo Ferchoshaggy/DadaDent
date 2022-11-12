@@ -16,14 +16,16 @@ class PresupuestoController extends Controller
         $generos=DB::table("generos")->select("*")->get();
         $tipos=DB::table("tipos")->select("*")->get();
         $ubicacions=DB::table("ubicacions")->select("*")->get();
+        /*
         $perma_supers=DB::table("perma_supers")->select("*")->get();
         $perma_infers=DB::table("perma_infers")->select("*")->get();
         $tempo_supers=DB::table("tempo_supers")->select("*")->get();
         $tempo_infers=DB::table("tempo_infers")->select("*")->get();
+        */
         $procedimientos=DB::table("procedimientos")->select("*")->get();
         $presupuestos=DB::table("presupuestos")->select("*")->get();
         
-        return view('Presupuesto.presupuesto',compact("generos","tipos","ubicacions","perma_supers","perma_infers","tempo_supers","tempo_infers","procedimientos","presupuestos"));
+        return view('Presupuesto.presupuesto',compact("generos","tipos","ubicacions","procedimientos","presupuestos"));
     }
 
     function save_presupuesto(Request $request){

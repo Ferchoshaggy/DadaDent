@@ -10,12 +10,23 @@ class SearchController extends Controller
    public function __construct(){
         $this->middleware('auth');
    }
+
    public function materialSearch($id){
        $datosMat=DB::table('materiales')->where("id",$id)->first();
        return json_encode($datosMat);
    }
+   public function all_materiales(){
+      $allmat=DB::table('materiales')->select("*")->get();
+       return json_encode($allmat);
+   }
+
+   public function all_procedimientos(){
+      $allproce=DB::table('procedimientos')->select("*")->get();
+       return json_encode($allproce);
+   }
 
    public function procedimiento_materialSearch($id){
+      ini_set('max_execution_time', 50000);
       $materiales_pro[0]=DB::table('procedimientos')->where("id",$id)->first();
       $materiales_pro[1]=DB::table('materiales_procedimientos')->where("id_procedimiento",$id)->get();
       return json_encode($materiales_pro);

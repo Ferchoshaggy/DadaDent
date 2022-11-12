@@ -40,6 +40,10 @@
     background-color: #2FB4D6 !important
 }
 
+.layout-navbar-fixed .wrapper .sidebar-dark-info .brand-link:not([class*=navbar]) {
+    background-color: #D6802E !important;
+}
+
 html{cursor:url(../img/maicra.gif), auto !important;}
 
 
