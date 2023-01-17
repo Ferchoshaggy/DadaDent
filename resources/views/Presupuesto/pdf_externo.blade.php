@@ -98,7 +98,7 @@
     @foreach($presupuestos_procedimientos as $presupuesto_procedimiento)
     @if($presupuesto_procedimiento->descuento!=0 || $presupuesto_procedimiento->descuento!=null)
     <?php $existe_descuento="si"; ?>
-    @breack
+    @break
     @endif
     @endforeach
     <table class="table" style=" width: 100%; text-align: left; border-collapse:collapse; margin-top: 60px;">
@@ -212,15 +212,17 @@
                 </td>
                 <td >
                     <div style="word-wrap: break-word; width: 95px;">
-                        ${{$costo=$procedimiento->costo}}
+                        ${{$costo=$procedimiento->costo_publico}}
+                        <?php
+                            $descuentos+=($procedimiento->costo_publico*$presupuesto_procedimiento->descuento)/100;
+                            $ganancia=$procedimiento->costo_publico-(($procedimiento->costo_publico*$presupuesto_procedimiento->descuento)/100); 
+                        ?>
                     </div>
                 </td>
                 @break
                 @endif
                 @endforeach
                 <?php 
-                    $descuentos+=($costo=$procedimiento->costo*$presupuesto_procedimiento->descuento)/100;
-                    $ganancia=$costo=$procedimiento->costo-(($costo=$procedimiento->costo*$presupuesto_procedimiento->descuento)/100);
                     $total+=$ganancia;
                     $total_costo+=$costo;
                 ?>

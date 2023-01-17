@@ -203,15 +203,18 @@
                 </td>
                 <td >
                     <div style="word-wrap: break-word; width: 95px;">
-                        ${{$costo=$procedimiento->costo}}
+                        ${{$costo=$procedimiento->costo_publico}}
+                        <?php 
+                            $descuentos+=($procedimiento->costo_publico*$presupuesto_procedimiento->descuento)/100;
+                            $resta=($procedimiento->costo_publico*$presupuesto_procedimiento->descuento)/100;
+                            $ganancia=(($procedimiento->costo_publico)-$resta)-($procedimiento->costo);
+                        ?>
                     </div>
                 </td>
                 @break
                 @endif
                 @endforeach
                 <?php 
-                    $descuentos+=($costo=$procedimiento->costo*$presupuesto_procedimiento->descuento)/100;
-                    $ganancia=$costo=$procedimiento->costo-(($costo=$procedimiento->costo*$presupuesto_procedimiento->descuento)/100);
                     $total+=$ganancia;
                     $total_costo+=$costo;
                 ?>
@@ -230,17 +233,14 @@
     </table>
 
     <p style=" margin-top: 20px; text-align: right;">Importe: ${{round($total_costo, 2)}}</p>
+    <p style="; text-align: right;">Inversión: ${{round($presupuesto->invercion, 2)}}</p>
     <p style="text-align: right;">Menos descuento de: ${{round($descuentos, 2)}}</p>
-    <p style="text-align: right;">Ganancia total: ${{round(($total_costo-$descuentos), 2)}}</p>
+    <p style="text-align: right;">Ganancia total: ${{round((($total_costo-$descuentos)-$presupuesto->invercion), 2)}}</p>
     <p style="text-align: right;">
     Porcentaje de ganancia total: 
-    @if($descuentos!=0)
-        {{round((($descuentos*100)/$total_costo), 2)}}%
-    @else
-        100%
-    @endif
+    {{$presupuesto->porcentaje}}
     </p>
-    <p style="text-align: right;">Total: ${{round($total, 2)}}</p>
+    <p style="text-align: right;">Total: ${{round($total_costo-$descuentos, 2)}}</p>
     
     <div style="margin-top: 10px;">
         <p style="font-size: 20px;">Observaciones</p>

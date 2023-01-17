@@ -63,7 +63,7 @@
                   <tr>
                     <th style="text-align: center;">Paciente</th>
                     <th style="text-align: center;">Edad</th>
-                    <th style="text-align: center;">Invercion</th>
+                    <th style="text-align: center;">Inversión</th>
                     <th style="text-align: center;">Costo a publico</th>
                     <th style="text-align: center;">Por. de ganancias</th>
                   </tr>
@@ -141,7 +141,7 @@
 
                 <div class="row">
                     <div class="col-md-3" style="margin-bottom: 20px;">
-                        <label>Inverción total</label>
+                        <label>Inversión total</label>
                         <div class="input-group mb-3">
                           <span class="input-group-text" style="border-color: #D6802E;">$</span>
                           <input type="number" name="importe_to" id="importe_to" style="border-color: #D6802E" class="form-control" placeholder="Inverción total" readonly>
@@ -285,7 +285,7 @@
 
                 <div class="row">
                     <div class="col-md-3" style="margin-bottom: 20px;">
-                        <label>Inverción total</label>
+                        <label>Inversión total</label>
                         <div class="input-group mb-3">
                           <span class="input-group-text" style="border-color: #D6802E;">$</span>
                           <input type="number" name="importe_to_edit" id="importe_to_edit" style="border-color: #D6802E" class="form-control" placeholder="Inverción total" readonly>
@@ -586,8 +586,27 @@
 <!-- este es para el selected2-->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+
+    var allproce_ser=null;
     //funcion de la tabla de boostrap tenga paginador y buscador
   $(document).ready(function() {
+
+    $.ajax({
+      url: "{{url('/all_procedimientos')}}",
+      dataType: "json",
+      timeout : 80000,
+      //context: document.body
+    }).done(function(allproce) {
+
+      if(allproce==null){
+        allproce_ser=null;
+      }else{
+        allproce_ser=allproce;
+      }
+    });
+
+
+
     $('.table').DataTable({
        "language": {
           "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
@@ -618,6 +637,7 @@
         $.ajax({
           url: "{{url('/procedimientos_presupuesto')}}"+'/'+id_presupuesto,
           dataType: "json",
+          timeout : 80000,
           //context: document.body
         }).done(function(procedimientos_pre) {
 
@@ -657,6 +677,7 @@
       $.ajax({
           url: "{{url('/procedimientoSearch')}}"+'/'+select.value,
           dataType: "json",
+          timeout : 80000,
         }).done(function(procedimiento_result) {
 
           if(procedimiento_result==null){
@@ -710,6 +731,7 @@ function agregar_dientes(indice){
                 $.ajax({
                   url: ruta_buscar,
                   dataType: "json",
+                  timeout : 80000,
                 }).done(function(dientes_result) {
                   if(dientes_result==null){
                     alert("la base de datos esta fallando compa");
@@ -867,24 +889,50 @@ $(document).on('click', '.eliminar_hijo', function(){
 
 
 
-  function sacar_costos_edit(select) {
-      $.ajax({
-          url: "{{url('/procedimientoSearch')}}"+'/'+select.value,
-          dataType: "json",
-        }).done(function(procedimiento_result) {
 
-          if(procedimiento_result==null){
-            alert("la base de datos esta fallando compa");
-          }else{
-           
-            select.dataset.costo=procedimiento_result.costo;
-            select.dataset.costo_publico=procedimiento_result.costo_publico;
-            resultados_edit();
+function sacar_costos_edit(select) {
+    //console.log(allproce_ser);
+    if (allproce_ser==null){
+        sacar_costos_edit_forma_1(select);
+    }else{
+        sacar_costos_edit_forma_2(select);
+    }
+}
 
-            
-          }
-        });
-  }
+function sacar_costos_edit_forma_2(select) {
+    
+    for (var i = 0; i<=allproce_ser.length; i++) {
+        if (allproce_ser[i].id==select.value){
+            select.dataset.costo=allproce_ser[i].costo;
+            select.dataset.costo_publico=allproce_ser[i].costo_publico;
+            break;
+        }
+        
+    }
+    resultados_edit();
+}
+
+
+//esta es la primera forma, pero sera acompañada de otra por que no responde el ervidor, el nombre sera cambiado por que lo tendra otra funcion, el nombre es sacar_costos_edit(select)
+function sacar_costos_edit_forma_1(select) {
+  $.ajax({
+      url: "{{url('/procedimientoSearch')}}"+'/'+select.value,
+      dataType: "json",
+      timeout : 80000,
+    }).done(function(procedimiento_result) {
+
+      if(procedimiento_result==null){
+        alert("la base de datos esta fallando compa");
+      }else{
+       
+        select.dataset.costo=procedimiento_result.costo;
+        select.dataset.costo_publico=procedimiento_result.costo_publico;
+        resultados_edit();
+
+        
+      }
+    });
+}
 
 
 function agregar_dientes_edit(indice){
@@ -924,6 +972,7 @@ function agregar_dientes_edit(indice){
                 $.ajax({
                   url: ruta_buscar,
                   dataType: "json",
+                  timeout : 80000,
                 }).done(function(dientes_result) {
                   if(dientes_result==null){
                     alert("la base de datos esta fallando compa");
@@ -957,11 +1006,11 @@ function agregar_dientes_edit(indice){
                     }
                     
                   }
-                  console.log("llenado");
+                  //console.log("llenado");
                   //este solo es para que seleccione cuando se llena por ajax, no carga si no lo hago directamente aqui, este estara acmpañada de una funcion que desactive elegido
                   if(document.getElementById("pz_edit"+indice).dataset.elegido=="no"){
                     var dato=document.getElementById("pz_edit"+indice).dataset.numero;
-                    console.log("eleccion");
+                    //console.log("eleccion");
                     $("#pz_edit"+indice).val(dato).trigger('change');
                   }
                 });
@@ -1117,6 +1166,7 @@ function llenar_datos(){
     $.ajax({
       url: "{{url('/procedimientos_presupuesto')}}"+'/'+id_presupuesto,
       dataType: "json",
+      timeout : 80000,
     }).done(function(procedimientos_pre) {
 
       if(procedimientos_pre==null){
@@ -1124,9 +1174,9 @@ function llenar_datos(){
         document.getElementById("id_presupuesto_edit").value=null;
       }else{
         document.getElementById("id_presupuesto_edit").value=id_presupuesto;
-        console.log(procedimientos_pre);
+        //console.log(procedimientos_pre);
         for (var i = 0; i <procedimientos_pre[1].length; i++) {
-            console.log(procedimientos_pre[1][i].numero_asignado_pz);
+            //console.log(procedimientos_pre[1][i].numero_asignado_pz);
             if (i==0){
 
                 document.getElementById("nombre_edit").value=procedimientos_pre[0].nombre;
@@ -1199,6 +1249,11 @@ function llenar_datos(){
                 });
                 document.getElementById("numero_de_procedimientos_edit").value=j_2;
 
+                //este solo lo agrego por si existe la primera consulta de todos los procedimientos 
+                if(allproce_ser!=null){
+                    resultados_edit();
+                }
+                
 
 
             }

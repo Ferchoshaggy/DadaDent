@@ -413,8 +413,24 @@ input[type=number] { -moz-appearance:textfield; }
 <!-- este es para el selected2-->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+    var allmat_ser=null;
     //funcion de la tabla de boostrap tenga paginador y buscador
   $(document).ready(function() {
+
+    $.ajax({
+      url: "{{url('/all_materiales')}}",
+      dataType: "json",
+      timeout : 80000,
+      //context: document.body
+    }).done(function(allmat) {
+
+      if(allmat==null){
+        allmat_ser=null;
+      }else{
+        allmat_ser=allmat;
+      }
+    });
+
     $('.table').DataTable({
        "language": {
           "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
@@ -437,6 +453,7 @@ input[type=number] { -moz-appearance:textfield; }
     $.ajax({
       url: "{{url('/procedimiento_materialSearch')}}"+'/'+id_procedimiento,
       dataType: "json",
+      timeout : 80000,
       //context: document.body
     }).done(function(materiales_pro) {
 
@@ -543,6 +560,7 @@ input[type=number] { -moz-appearance:textfield; }
             $.ajax({
               url: "{{url('/search_material')}}"+'/'+select.value,
               dataType: "json",
+              timeout : 80000,
             }).done(function(datosMat) {
 
               if(datosMat==null){
@@ -625,6 +643,7 @@ input[type=number] { -moz-appearance:textfield; }
         $.ajax({
           url: "{{url('/procedimiento_materialSearch')}}"+'/'+id_procedimiento,
           dataType: "json",
+          timeout : 80000,
         }).done(function(materiales_pro) {
 
           if(materiales_pro==null){
@@ -640,9 +659,10 @@ input[type=number] { -moz-appearance:textfield; }
                     document.getElementById("costo_edit").value=materiales_pro[0].costo;
                     document.getElementById("costo_public_edit").value=materiales_pro[0].costo_publico;
                     document.getElementById("porcentaje_edit").value=materiales_pro[0].porcentaje;
+                    document.getElementById("cantidad_edit0").value=materiales_pro[1][0].usos;
                     $("#material_edit0").val(materiales_pro[1][0].id_material).trigger('change');
                     //document.getElementById("material_edit0").value=;
-                    document.getElementById("cantidad_edit0").value=materiales_pro[1][0].usos;
+                    
 
 
 
@@ -687,9 +707,13 @@ input[type=number] { -moz-appearance:textfield; }
 
                 //
             }
+            //este solo lo agrego por si existe la primera consulta de todos los materiales, esto con fin de que no falle el ajax 
+            if (allmat_ser!=null){
+                costo_total_edit();
+            }
+            
           }
         });
-
 
     }
 
@@ -735,7 +759,51 @@ input[type=number] { -moz-appearance:textfield; }
         costo_total_edit();
     });
 
-    function sacar_costo_edit(select){
+
+
+    function sacar_costo_edit(select) {
+        if (allmat_ser==null){
+            sacar_costo_edit_forma_1(select);
+        }else{
+            sacar_costo_edit_forma_2(select);
+        }
+    }
+
+    function sacar_costo_edit_forma_2(select) {
+        if (select.value!=null && select.value!=0){
+
+            for (var i = 0; i<=allmat_ser.length; i++) {
+                if(allmat_ser[i].id==select.value){
+                    select.dataset.costo=allmat_ser[i].Costo_por_uso;
+                    break;
+                }
+            }
+               
+
+            for (var i = 0; i <j_2; i++) {
+
+                    try{
+                        var texto="material_edit"+i;
+                        if(document.getElementById("material_edit"+i).value==select.value && select.id != texto){
+                            select.value="";
+                            select.dataset.costo=0; 
+                            $("#"+select.id).val("").trigger('change');
+                            alert("ya lo elegiste, para agregar mas solo incrementa los usos");
+                            break;
+                        }
+
+                    
+                    }catch (TypeError) {
+                        console.log("no existe ese objeto con ese nombre");
+                    }
+
+            }
+        }
+        costo_total_edit();
+    }
+
+    //esta es la primera forma, pero sera acompañada de otra por que no responde el ervidor, el nombre sera cambiado por que lo tendra otra funcion, el nombre es sacar_costo_edit(select)
+    function sacar_costo_edit_forma_1(select){
 
         if (select.value!=null && select.value!=0){
 
@@ -743,6 +811,7 @@ input[type=number] { -moz-appearance:textfield; }
             $.ajax({
               url: "{{url('/search_material')}}"+'/'+select.value,
               dataType: "json",
+              timeout : 80000,
             }).done(function(datosMat) {
 
               if(datosMat==null){
@@ -776,6 +845,8 @@ input[type=number] { -moz-appearance:textfield; }
             });
 
         }
+
+        //console.log(allmat_ser);
 
     }
 
